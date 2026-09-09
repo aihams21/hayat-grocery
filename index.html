@@ -869,6 +869,84 @@
                 font-size: 0.9rem;
             }
         }
+        /* ═══════════════════════════════════════
+           Products Display (Customer View)
+           ═══════════════════════════════════════ */
+        .prod-tab {
+            padding: 10px 22px; border-radius: 30px; border: 2px solid #ddd;
+            background: white; font-family: 'Cairo', sans-serif; font-size: 0.9rem;
+            font-weight: 700; cursor: pointer; transition: all 0.3s;
+        }
+        .prod-tab.active, .prod-tab:hover {
+            background: var(--emerald); color: white; border-color: var(--emerald);
+            box-shadow: 0 4px 15px rgba(4,120,87,0.3);
+        }
+        .cust-product-card {
+            background: var(--bg-white); border-radius: var(--radius-lg); overflow: hidden;
+            box-shadow: var(--shadow-md); border: 1px solid rgba(0,0,0,0.04);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .cust-product-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+        .cust-product-card img { width: 100%; height: 200px; object-fit: cover; }
+        .cust-product-card .no-img {
+            width: 100%; height: 200px; background: linear-gradient(135deg, #e8f5e9, #f0fdf4);
+            display: flex; align-items: center; justify-content: center; font-size: 4rem;
+        }
+        .cust-card-body { padding: 18px; }
+        .cust-card-body .cat-tag {
+            font-size: 0.75rem; color: var(--emerald); background: #e8f5e9;
+            padding: 4px 12px; border-radius: 20px; display: inline-block; margin-bottom: 8px; font-weight: 600;
+        }
+        .cust-card-body h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; color: var(--text-dark); }
+        .cust-card-body .desc { font-size: 0.85rem; color: var(--text-light); margin-bottom: 10px; line-height: 1.6; }
+        .cust-card-body .price-row {
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .cust-card-body .price {
+            font-size: 1.3rem; font-weight: 900; color: var(--gold-dark);
+        }
+        .cust-card-body .price small { font-size: 0.75rem; font-weight: 400; color: var(--text-light); }
+        .cust-card-body .order-btn {
+            padding: 8px 18px; border-radius: 25px; border: none;
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: white; font-family: 'Cairo', sans-serif; font-size: 0.8rem; font-weight: 700;
+            cursor: pointer; transition: all 0.3s; text-decoration: none;
+        }
+        .cust-card-body .order-btn:hover { transform: scale(1.05); box-shadow: 0 4px 15px rgba(37,211,102,0.4); }
+
+        /* ═══════════════════════════════════════
+           Floating WhatsApp Button
+           ═══════════════════════════════════════ */
+        .whatsapp-float {
+            position: fixed; bottom: 100px; right: 24px; z-index: 998;
+            width: 60px; height: 60px; border-radius: 50%;
+            background: #25d366; color: white; border: none;
+            font-size: 1.8rem; cursor: pointer;
+            box-shadow: 0 6px 25px rgba(37,211,102,0.5);
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none; transition: all 0.3s;
+            animation: whatsappPulse 2s infinite;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); }
+        @keyframes whatsappPulse {
+            0%, 100% { box-shadow: 0 6px 25px rgba(37,211,102,0.5); }
+            50% { box-shadow: 0 6px 25px rgba(37,211,102,0.8), 0 0 0 12px rgba(37,211,102,0.15); }
+        }
+
+        /* Admin link */
+        .admin-link {
+            position: fixed; top: 50%; left: 12px; transform: translateY(-50%) rotate(-90deg);
+            transform-origin: left center; z-index: 997;
+            font-size: 0.7rem; color: #bbb; text-decoration: none; font-weight: 600;
+            letter-spacing: 1px; transition: color 0.3s;
+        }
+        .admin-link:hover { color: var(--emerald); }
+
+        @media (max-width: 768px) {
+            .whatsapp-float { bottom: 90px; right: 16px; width: 52px; height: 52px; font-size: 1.5rem; }
+            .admin-link { display: none; }
+            .cust-product-card img, .cust-product-card .no-img { height: 160px; }
+        }
     </style>
 </head>
 <body>
@@ -972,6 +1050,20 @@
     </section>
 
     <!-- ═══════════════════════════════════════
+         Products Section (from Admin)
+         ═══════════════════════════════════════ -->
+    <section class="section" id="productsSection" style="display:none;">
+        <div class="section-title fade-in">
+            <h3>🛒 منتجاتنا المتوفرة</h3>
+            <div class="underline"></div>
+            <p>تصفح منتجاتنا المتوفرة حالياً بالأسعار</p>
+        </div>
+        <!-- Product filter tabs -->
+        <div class="product-tabs fade-in" id="productTabs" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:30px;"></div>
+        <div class="products-display-grid" id="productsDisplayGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;"></div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
          About Strip
          ═══════════════════════════════════════ -->
     <section class="about-strip" id="about">
@@ -1051,7 +1143,7 @@
             </div>
 
             <div class="map-actions fade-in">
-                <a href="https://www.google.com/maps/search/?api=1&query=شارع+الثلاثين+القرب+من+إسكان+أبو+جبريل+الزرقاء+الأردن"
+                <a href="https://maps.app.goo.gl/BgzeY3gakSoMBLTk6"
                    target="_blank"
                    class="btn btn-primary"
                    rel="noopener">
@@ -1106,7 +1198,7 @@
     <div class="mobile-bar">
         <div class="mobile-bar-inner">
             <a href="tel:0775199029" class="bar-btn bar-call">📞 اتصل الآن</a>
-            <a href="https://www.google.com/maps/search/?api=1&query=شارع+الثلاثين+الزرقاء+الأردن"
+            <a href="https://maps.app.goo.gl/BgzeY3gakSoMBLTk6"
                target="_blank"
                class="bar-btn bar-map"
                rel="noopener">📍 الخريطة</a>
@@ -1117,6 +1209,12 @@
          Scroll to Top Button
          ═══════════════════════════════════════ -->
     <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/962775199029" target="_blank" class="whatsapp-float" rel="noopener" title="تواصل معنا واتساب">💬</a>
+
+    <!-- Admin Link (hidden, click 3 times to open) -->
+    <a href="admin.html" class="admin-link" id="adminLink" title="لوحة التحكم">⚙️</a>
 
     <!-- ═══════════════════════════════════════
          JavaScript
@@ -1180,6 +1278,67 @@
         }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
         fadeEls.forEach(el => fadeObserver.observe(el));
+
+        // ═══════════════════════════════════════
+        // LOAD PRODUCTS FROM ADMIN (localStorage)
+        // ═══════════════════════════════════════
+        function loadCustomerProducts() {
+            const products = JSON.parse(localStorage.getItem('hayat_products') || '[]');
+            const section = document.getElementById('productsSection');
+            const grid = document.getElementById('productsDisplayGrid');
+            const tabs = document.getElementById('productTabs');
+
+            if (products.length === 0) {
+                section.style.display = 'none';
+                return;
+            }
+
+            section.style.display = 'block';
+
+            const catEmoji = { 'بقوليات ومعلبات': '🫘', 'ألبان وأجبان': '🧀', 'منظفات': '🧹', 'مسليات ومشروبات': '🍿' };
+            const cats = [...new Set(products.map(p => p.category))];
+
+            // Build tabs
+            tabs.innerHTML = '<button class="prod-tab active" onclick="custFilter(\'all\',this)">الكل (' + products.length + ')</button>' +
+                cats.map(c => `<button class="prod-tab" onclick="custFilter('${c}',this)">${catEmoji[c]||''} ${c} (${products.filter(p=>p.category===c).length})</button>`).join('');
+
+            renderCustProducts(products);
+        }
+
+        let custCurrentCat = 'all';
+        function custFilter(cat, btn) {
+            custCurrentCat = cat;
+            document.querySelectorAll('.prod-tab').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const products = JSON.parse(localStorage.getItem('hayat_products') || '[]');
+            renderCustProducts(products);
+        }
+
+        function renderCustProducts(products) {
+            const grid = document.getElementById('productsDisplayGrid');
+            const filtered = custCurrentCat === 'all' ? products : products.filter(p => p.category === custCurrentCat);
+            const catEmoji = { 'بقوليات ومعلبات': '🫘', 'ألبان وأجبان': '🧀', 'منظفات': '🧹', 'مسليات ومشروبات': '🍿' };
+
+            grid.innerHTML = filtered.map(p => `
+                <div class="cust-product-card fade-in">
+                    ${p.image ? `<img src="${p.image}" alt="${p.name}" loading="lazy">` : `<div class="no-img">${catEmoji[p.category]||'📦'}</div>`}
+                    <div class="cust-card-body">
+                        <span class="cat-tag">${catEmoji[p.category]||''} ${p.category}</span>
+                        <h4>${p.name}</h4>
+                        <div class="desc">${p.desc || ''}</div>
+                        <div class="price-row">
+                            <div class="price">${p.price.toFixed(2)} <small>د.أ / ${p.unit}</small></div>
+                            <a href="https://wa.me/962775199029?text=${encodeURIComponent('مرحباً، بدي أطلب: ' + p.name + ' بسعر ' + p.price.toFixed(2) + ' د.أ')}" target="_blank" class="order-btn" rel="noopener">📦 اطلب الآن</a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Re-observe new fade-in elements
+            document.querySelectorAll('.cust-product-card.fade-in').forEach(el => fadeObserver.observe(el));
+        }
+
+        loadCustomerProducts();
 
         // ── Smooth scroll for anchor links ──
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
