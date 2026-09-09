@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم — بقالة الحياة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --emerald: #047857;
+            --emerald-light: #059669;
+            --emerald-dark: #065f46;
+            --gold: #d4a017;
+            --gold-light: #f0c040;
+            --bg: #f0f2f5;
+            --white: #ffffff;
+            --text: #1a1a2e;
+            --text2: #555;
+            --danger: #e74c3c;
+            --danger-light: #fdecea;
+            --success: #27ae60;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+        /* ═══ Login Screen ═══ */
+        .login-screen {
+            display: flex; align-items: center; justify-content: center;
+            min-height: 100vh; background: linear-gradient(135deg, var(--emerald-dark), var(--emerald));
+        }
+        .login-box {
+            background: var(--white); border-radius: 24px; padding: 48px 40px;
+            width: 100%; max-width: 420px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .login-box img { width: 100px; height: 100px; border-radius: 50%; border: 4px solid var(--gold); margin-bottom: 20px; background: #f9f9f9; padding: 5px; object-fit: contain; }
+        .login-box h2 { font-size: 1.5rem; color: var(--emerald-dark); margin-bottom: 6px; }
+        .login-box p { color: var(--text2); font-size: 0.9rem; margin-bottom: 28px; }
+        .login-box input {
+            width: 100%; padding: 14px 18px; border: 2px solid #ddd; border-radius: 12px;
+            font-family: 'Cairo', sans-serif; font-size: 1rem; text-align: center;
+            transition: border-color 0.3s; outline: none;
+        }
+        .login-box input:focus { border-color: var(--emerald); }
+        .login-box button {
+            width: 100%; padding: 14px; margin-top: 16px; border: none; border-radius: 12px;
+            background: linear-gradient(135deg, var(--emerald), var(--emerald-light));
+            color: white; font-family: 'Cairo', sans-serif; font-size: 1.1rem; font-weight: 700;
+            cursor: pointer; transition: transform 0.2s, box-shadow 0.3s;
+        }
+        .login-box button:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(4,120,87,0.4); }
+        .login-error { color: var(--danger); font-size: 0.85rem; margin-top: 12px; display: none; }
+
+        /* ═══ Admin Panel ═══ */
+        .admin-panel { display: none; min-height: 100vh; }
+
+        /* Top bar */
+        .topbar {
+            background: linear-gradient(135deg, var(--emerald-dark), var(--emerald));
+            color: white; padding: 16px 5%; display: flex; align-items: center;
+            justify-content: space-between; box-shadow: 0 4px 20px rgba(4,120,87,0.3);
+        }
+        .topbar-right { display: flex; align-items: center; gap: 12px; }
+        .topbar-right img { width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--gold); background: white; padding: 2px; object-fit: contain; }
+        .topbar-right h3 { font-size: 1.1rem; }
+        .topbar-left { display: flex; gap: 10px; }
+        .topbar-left a, .topbar-left button {
+            padding: 8px 18px; border-radius: 25px; border: 2px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1); color: white; font-family: 'Cairo', sans-serif;
+            font-size: 0.85rem; font-weight: 600; cursor: pointer; text-decoration: none;
+            transition: all 0.3s;
+        }
+        .topbar-left a:hover, .topbar-left button:hover { background: rgba(255,255,255,0.25); }
+
+        /* Stats */
+        .stats-row {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px; padding: 30px 5% 10px; max-width: 1400px; margin: 0 auto;
+        }
+        .stat-card {
+            background: var(--white); border-radius: 16px; padding: 24px; text-align: center;
+            box-shadow: var(--shadow); border-right: 5px solid var(--emerald);
+        }
+        .stat-card .stat-num { font-size: 2rem; font-weight: 900; color: var(--emerald); }
+        .stat-card .stat-label { font-size: 0.85rem; color: var(--text2); margin-top: 4px; }
+
+        /* Main content */
+        .admin-content { max-width: 1400px; margin: 0 auto; padding: 20px 5% 40px; }
+
+        /* Add Product Form */
+        .form-section {
+            background: var(--white); border-radius: 20px; padding: 32px;
+            box-shadow: var(--shadow); margin-bottom: 30px;
+        }
+        .form-section h3 {
+            font-size: 1.3rem; color: var(--emerald-dark); margin-bottom: 24px;
+            padding-bottom: 12px; border-bottom: 3px solid var(--bg);
+        }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group.full { grid-column: 1 / -1; }
+        .form-group label { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 12px 16px; border: 2px solid #e0e0e0; border-radius: 12px;
+            font-family: 'Cairo', sans-serif; font-size: 0.95rem; outline: none;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--emerald); }
+        .form-group textarea { resize: vertical; min-height: 80px; }
+
+        /* Image upload area */
+        .img-upload-area {
+            border: 3px dashed #ccc; border-radius: 16px; padding: 30px;
+            text-align: center; cursor: pointer; transition: all 0.3s;
+            position: relative; overflow: hidden;
+        }
+        .img-upload-area:hover { border-color: var(--emerald); background: #f0fdf4; }
+        .img-upload-area .upload-icon { font-size: 2.5rem; margin-bottom: 8px; }
+        .img-upload-area p { color: var(--text2); font-size: 0.9rem; }
+        .img-upload-area input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+        .img-preview { max-width: 200px; max-height: 150px; border-radius: 12px; margin-top: 12px; display: none; }
+
+        .btn-add {
+            padding: 14px 40px; border: none; border-radius: 12px; margin-top: 20px;
+            background: linear-gradient(135deg, var(--emerald), var(--emerald-light));
+            color: white; font-family: 'Cairo', sans-serif; font-size: 1.1rem; font-weight: 700;
+            cursor: pointer; transition: all 0.3s; width: 100%;
+        }
+        .btn-add:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(4,120,87,0.3); }
+
+        /* Products list */
+        .products-section {
+            background: var(--white); border-radius: 20px; padding: 32px;
+            box-shadow: var(--shadow);
+        }
+        .products-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+        .products-header h3 { font-size: 1.3rem; color: var(--emerald-dark); }
+        .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; }
+        .filter-btn {
+            padding: 8px 16px; border-radius: 25px; border: 2px solid #ddd;
+            background: white; font-family: 'Cairo', sans-serif; font-size: 0.8rem;
+            font-weight: 600; cursor: pointer; transition: all 0.3s;
+        }
+        .filter-btn.active, .filter-btn:hover { background: var(--emerald); color: white; border-color: var(--emerald); }
+
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+
+        .product-card {
+            background: var(--bg); border-radius: 16px; overflow: hidden;
+            border: 1px solid #eee; transition: all 0.3s;
+        }
+        .product-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.1); }
+        .product-card img { width: 100%; height: 180px; object-fit: cover; }
+        .product-card .no-img { width: 100%; height: 180px; background: #e8f5e9; display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+        .product-card-body { padding: 16px; }
+        .product-card-body h4 { font-size: 1.05rem; margin-bottom: 4px; }
+        .product-card-body .prod-cat { font-size: 0.75rem; color: var(--emerald); background: #e8f5e9; padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 8px; }
+        .product-card-body .prod-desc { font-size: 0.85rem; color: var(--text2); margin-bottom: 10px; line-height: 1.6; }
+        .product-card-body .prod-price { font-size: 1.2rem; font-weight: 900; color: var(--gold); }
+        .product-card-body .prod-price span { font-size: 0.8rem; font-weight: 400; color: var(--text2); }
+        .product-card-actions { display: flex; gap: 8px; padding: 0 16px 16px; }
+        .product-card-actions button {
+            flex: 1; padding: 10px; border: none; border-radius: 10px;
+            font-family: 'Cairo', sans-serif; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-edit { background: #fff3cd; color: #856404; }
+        .btn-edit:hover { background: #ffc107; color: white; }
+        .btn-delete { background: var(--danger-light); color: var(--danger); }
+        .btn-delete:hover { background: var(--danger); color: white; }
+
+        .empty-state { text-align: center; padding: 60px 20px; color: var(--text2); }
+        .empty-state .empty-icon { font-size: 4rem; margin-bottom: 12px; }
+
+        /* Edit Modal */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999;
+            display: none; align-items: center; justify-content: center; padding: 20px;
+        }
+        .modal-overlay.show { display: flex; }
+        .modal-box {
+            background: white; border-radius: 20px; padding: 32px; width: 100%;
+            max-width: 500px; max-height: 90vh; overflow-y: auto;
+        }
+        .modal-box h3 { margin-bottom: 20px; color: var(--emerald-dark); }
+        .modal-close {
+            float: left; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text2);
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px);
+            background: var(--emerald); color: white; padding: 14px 28px; border-radius: 12px;
+            font-family: 'Cairo', sans-serif; font-weight: 700; z-index: 99999;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+        .toast.error { background: var(--danger); }
+
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .products-grid { grid-template-columns: 1fr; }
+            .topbar { flex-direction: column; gap: 12px; text-align: center; }
+            .topbar-left { justify-content: center; }
+            .stats-row { grid-template-columns: 1fr 1fr; }
+            .login-box { margin: 20px; padding: 32px 24px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     Login Screen
+     ═══════════════════════════════════════ -->
+<div class="login-screen" id="loginScreen">
+    <div class="login-box">
+        <img src="logo.png" alt="بقالة الحياة">
+        <h2>لوحة التحكم</h2>
+        <p>بقالة الحياة — أدخل كلمة المرور للدخول</p>
+        <input type="password" id="loginPass" placeholder="كلمة المرور" onkeydown="if(event.key==='Enter')doLogin()">
+        <button onclick="doLogin()">🔐 دخول</button>
+        <div class="login-error" id="loginError">❌ كلمة المرور خاطئة، حاول مرة ثانية</div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     Admin Panel
+     ═══════════════════════════════════════ -->
+<div class="admin-panel" id="adminPanel">
+    <!-- Top Bar -->
+    <div class="topbar">
+        <div class="topbar-right">
+            <img src="logo.png" alt="بقالة الحياة">
+            <h3>لوحة تحكم بقالة الحياة</h3>
+        </div>
+        <div class="topbar-left">
+            <a href="index.html" target="_blank">🌐 عرض الموقع</a>
+            <button onclick="doLogout()">🚪 خروج</button>
+        </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="stat-num" id="totalCount">0</div>
+            <div class="stat-label">إجمالي المنتجات</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-num" id="catCount">0</div>
+            <div class="stat-label">عدد الأقسام</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-num" id="todayCount">0</div>
+            <div class="stat-label">منشورات اليوم</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-num" id="priceAvg">0</div>
+            <div class="stat-label">متوسط الأسعار</div>
+        </div>
+    </div>
+
+    <!-- Add Product Form -->
+    <div class="admin-content">
+        <div class="form-section">
+            <h3>➕ إضافة منتج جديد</h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>اسم المنتج *</label>
+                    <input type="text" id="pName" placeholder="مثال: عدس أحمر">
+                </div>
+                <div class="form-group">
+                    <label>القسم *</label>
+                    <select id="pCategory">
+                        <option value="">— اختر القسم —</option>
+                        <option value="بقوليات ومعلبات">🫘 بقوليات ومعلبات</option>
+                        <option value="ألبان وأجبان">🧀 ألبان وأجبان</option>
+                        <option value="منظفات">🧹 منظفات وأدوات منزلية</option>
+                        <option value="مسليات ومشروبات">🍿 مسليات ومشروبات</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>السعر (دينار) *</label>
+                    <input type="number" id="pPrice" placeholder="مثال: 2.50" step="0.05" min="0">
+                </div>
+                <div class="form-group">
+                    <label>الوحدة</label>
+                    <input type="text" id="pUnit" placeholder="مثال: كيلو، علبة، قطعة">
+                </div>
+                <div class="form-group full">
+                    <label>الوصف</label>
+                    <textarea id="pDesc" placeholder="وصف المنتج (اختياري)"></textarea>
+                </div>
+                <div class="form-group full">
+                    <label>صورة المنتج</label>
+                    <div class="img-upload-area" id="uploadArea">
+                        <div class="upload-icon">📸</div>
+                        <p>اضغط أو اسحب صورة هنا</p>
+                        <input type="file" id="pImage" accept="image/*" onchange="previewImage(event)">
+                    </div>
+                    <img class="img-preview" id="imgPreview">
+                </div>
+            </div>
+            <button class="btn-add" onclick="addProduct()">✅ إضافة المنتج</button>
+        </div>
+
+        <!-- Products List -->
+        <div class="products-section">
+            <div class="products-header">
+                <h3>📦 المنتجات المضافة</h3>
+                <div class="filter-bar">
+                    <button class="filter-btn active" onclick="filterProducts('all', this)">الكل</button>
+                    <button class="filter-btn" onclick="filterProducts('بقوليات ومعلبات', this)">🫘 بقوليات</button>
+                    <button class="filter-btn" onclick="filterProducts('ألبان وأجبان', this)">🧀 ألبان</button>
+                    <button class="filter-btn" onclick="filterProducts('منظفات', this)">🧹 منظفات</button>
+                    <button class="filter-btn" onclick="filterProducts('مسليات ومشروبات', this)">🍿 مسليات</button>
+                </div>
+            </div>
+            <div class="products-grid" id="productsGrid">
+                <!-- Products loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal-overlay" id="editModal">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <h3>✏️ تعديل المنتج</h3>
+        <input type="hidden" id="editId">
+        <div class="form-grid">
+            <div class="form-group">
+                <label>اسم المنتج</label>
+                <input type="text" id="editName">
+            </div>
+            <div class="form-group">
+                <label>القسم</label>
+                <select id="editCategory">
+                    <option value="بقوليات ومعلبات">🫘 بقوليات ومعلبات</option>
+                    <option value="ألبان وأجبان">🧀 ألبان وأجبان</option>
+                    <option value="منظفات">🧹 منظفات وأدوات منزلية</option>
+                    <option value="مسليات ومشروبات">🍿 مسليات ومشروبات</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>السعر (دينار)</label>
+                <input type="number" id="editPrice" step="0.05" min="0">
+            </div>
+            <div class="form-group">
+                <label>الوحدة</label>
+                <input type="text" id="editUnit">
+            </div>
+            <div class="form-group full">
+                <label>الوصف</label>
+                <textarea id="editDesc"></textarea>
+            </div>
+            <div class="form-group full">
+                <label>صورة جديدة (اتركها فارغة للحفاظ على القديمة)</label>
+                <input type="file" id="editImage" accept="image/*">
+            </div>
+        </div>
+        <button class="btn-add" onclick="saveEdit()" style="margin-top:16px">💾 حفظ التعديلات</button>
+    </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+    // ═══════════════════════════════════════
+    // CONFIG & PASSWORD
+    // ═══════════════════════════════════════
+    const ADMIN_PASS = 'hayat2026';  // ← غيّر كلمة المرور من هنا
+
+    function getProducts() {
+        return JSON.parse(localStorage.getItem('hayat_products') || '[]');
+    }
+    function saveProducts(products) {
+        localStorage.setItem('hayat_products', JSON.stringify(products));
+    }
+
+    // ═══════════════════════════════════════
+    // LOGIN / LOGOUT
+    // ═══════════════════════════════════════
+    function doLogin() {
+        const pass = document.getElementById('loginPass').value;
+        if (pass === ADMIN_PASS) {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'block';
+            localStorage.setItem('hayat_admin_logged', '1');
+            loadProducts();
+            showToast('✅ مرحباً بك في لوحة التحكم');
+        } else {
+            document.getElementById('loginError').style.display = 'block';
+        }
+    }
+
+    function doLogout() {
+        localStorage.removeItem('hayat_admin_logged');
+        document.getElementById('adminPanel').style.display = 'none';
+        document.getElementById('loginScreen').style.display = 'flex';
+        document.getElementById('loginPass').value = '';
+    }
+
+    // Check if already logged in
+    if (localStorage.getItem('hayat_admin_logged') === '1') {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('adminPanel').style.display = 'block';
+        loadProducts();
+    }
+
+    // ═══════════════════════════════════════
+    // IMAGE HANDLING
+    // ═══════════════════════════════════════
+    let currentImageBase64 = '';
+
+    function previewImage(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        if (file.size > 2 * 1024 * 1024) {
+            showToast('❌ الصورة كبيرة جداً! حد أقصى 2 ميجا', true);
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            currentImageBase64 = ev.target.result;
+            document.getElementById('imgPreview').src = ev.target.result;
+            document.getElementById('imgPreview').style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    }
+
+    // ═══════════════════════════════════════
+    // ADD PRODUCT
+    // ═══════════════════════════════════════
+    function addProduct() {
+        const name = document.getElementById('pName').value.trim();
+        const category = document.getElementById('pCategory').value;
+        const price = parseFloat(document.getElementById('pPrice').value);
+        const unit = document.getElementById('pUnit').value.trim();
+        const desc = document.getElementById('pDesc').value.trim();
+
+        if (!name) { showToast('❌ اكتب اسم المنتج', true); return; }
+        if (!category) { showToast('❌ اختر القسم', true); return; }
+        if (isNaN(price) || price <= 0) { showToast('❌ اكتب سعر صحيح', true); return; }
+
+        const product = {
+            id: Date.now(),
+            name,
+            category,
+            price,
+            unit: unit || 'القطعة',
+            desc,
+            image: currentImageBase64 || '',
+            date: new Date().toISOString(),
+            featured: false
+        };
+
+        const products = getProducts();
+        products.unshift(product);
+        saveProducts(products);
+
+        // Reset form
+        document.getElementById('pName').value = '';
+        document.getElementById('pCategory').value = '';
+        document.getElementById('pPrice').value = '';
+        document.getElementById('pUnit').value = '';
+        document.getElementById('pDesc').value = '';
+        document.getElementById('pImage').value = '';
+        document.getElementById('imgPreview').style.display = 'none';
+        currentImageBase64 = '';
+
+        loadProducts();
+        showToast('✅ تمت إضافة المنتج بنجاح!');
+    }
+
+    // ═══════════════════════════════════════
+    // LOAD & RENDER PRODUCTS
+    // ═══════════════════════════════════════
+    let currentFilter = 'all';
+
+    function loadProducts() {
+        const products = getProducts();
+        const grid = document.getElementById('productsGrid');
+
+        // Update stats
+        document.getElementById('totalCount').textContent = products.length;
+        const cats = [...new Set(products.map(p => p.category))];
+        document.getElementById('catCount').textContent = cats.length;
+
+        const today = new Date().toDateString();
+        const todayProds = products.filter(p => new Date(p.date).toDateString() === today);
+        document.getElementById('todayCount').textContent = todayProds.length;
+
+        const avg = products.length > 0 ? (products.reduce((s, p) => s + p.price, 0) / products.length).toFixed(2) : 0;
+        document.getElementById('priceAvg').textContent = avg + ' د.أ';
+
+        // Filter
+        const filtered = currentFilter === 'all' ? products : products.filter(p => p.category === currentFilter);
+
+        if (filtered.length === 0) {
+            grid.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><p>لا يوجد منتجات بعد. أضف أول منتج!</p></div>';
+            return;
+        }
+
+        const catEmoji = { 'بقوليات ومعلبات': '🫘', 'ألبان وأجبان': '🧀', 'منظفات': '🧹', 'مسليات ومشروبات': '🍿' };
+
+        grid.innerHTML = filtered.map(p => `
+            <div class="product-card">
+                ${p.image ? `<img src="${p.image}" alt="${p.name}">` : `<div class="no-img">${catEmoji[p.category] || '📦'}</div>`}
+                <div class="product-card-body">
+                    <span class="prod-cat">${catEmoji[p.category] || ''} ${p.category}</span>
+                    <h4>${p.name}</h4>
+                    <div class="prod-desc">${p.desc || 'بدون وصف'}</div>
+                    <div class="prod-price">${p.price.toFixed(2)} <span>د.أ / ${p.unit}</span></div>
+                </div>
+                <div class="product-card-actions">
+                    <button class="btn-edit" onclick="openEdit(${p.id})">✏️ تعديل</button>
+                    <button class="btn-delete" onclick="deleteProduct(${p.id})">🗑️ حذف</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function filterProducts(cat, btn) {
+        currentFilter = cat;
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        loadProducts();
+    }
+
+    // ═══════════════════════════════════════
+    // DELETE PRODUCT
+    // ═══════════════════════════════════════
+    function deleteProduct(id) {
+        if (!confirm('هل أنت متأكد من حذف هذا المنتج؟')) return;
+        let products = getProducts();
+        products = products.filter(p => p.id !== id);
+        saveProducts(products);
+        loadProducts();
+        showToast('🗑️ تم حذف المنتج');
+    }
+
+    // ═══════════════════════════════════════
+    // EDIT PRODUCT
+    // ═══════════════════════════════════════
+    function openEdit(id) {
+        const products = getProducts();
+        const p = products.find(x => x.id === id);
+        if (!p) return;
+
+        document.getElementById('editId').value = id;
+        document.getElementById('editName').value = p.name;
+        document.getElementById('editCategory').value = p.category;
+        document.getElementById('editPrice').value = p.price;
+        document.getElementById('editUnit').value = p.unit;
+        document.getElementById('editDesc').value = p.desc;
+        document.getElementById('editImage').value = '';
+        document.getElementById('editModal').classList.add('show');
+    }
+
+    function closeModal() {
+        document.getElementById('editModal').classList.remove('show');
+    }
+
+    function saveEdit() {
+        const id = parseInt(document.getElementById('editId').value);
+        let products = getProducts();
+        const idx = products.findIndex(x => x.id === id);
+        if (idx === -1) return;
+
+        products[idx].name = document.getElementById('editName').value.trim();
+        products[idx].category = document.getElementById('editCategory').value;
+        products[idx].price = parseFloat(document.getElementById('editPrice').value);
+        products[idx].unit = document.getElementById('editUnit').value.trim() || 'القطعة';
+        products[idx].desc = document.getElementById('editDesc').value.trim();
+
+        // Update image if new one selected
+        const newImg = document.getElementById('editImage').files[0];
+        if (newImg) {
+            if (newImg.size > 2 * 1024 * 1024) {
+                showToast('❌ الصورة كبيرة جداً!', true);
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                products[idx].image = ev.target.result;
+                saveProducts(products);
+                loadProducts();
+                closeModal();
+                showToast('✅ تم تعديل المنتج');
+            };
+            reader.readAsDataURL(newImg);
+        } else {
+            saveProducts(products);
+            loadProducts();
+            closeModal();
+            showToast('✅ تم تعديل المنتج');
+        }
+    }
+
+    // ═══════════════════════════════════════
+    // TOAST NOTIFICATION
+    // ═══════════════════════════════════════
+    function showToast(msg, isError) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.className = 'toast' + (isError ? ' error' : '');
+        setTimeout(() => t.classList.add('show'), 10);
+        setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    // Close modal on outside click
+    document.getElementById('editModal').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+    });
+</script>
+</body>
+</html>
