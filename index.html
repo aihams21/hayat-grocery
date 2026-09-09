@@ -1147,7 +1147,7 @@
             <div class="feature-item fade-in">
                 <span class="feat-icon">⏰</span>
                 <h5>ساعات طويلة</h5>
-                <p>7 ص — 11 م يومياً</p>
+                <p>7 ص — 12 م يومياً</p>
             </div>
         </div>
     </section>
@@ -1221,7 +1221,7 @@
             <div class="about-item fade-in">
                 <span class="icon">🕐</span>
                 <h4>أوقات العمل</h4>
-                <p>يومياً من 7:00 صباحاً<br>إلى 11:00 مساءً<br>بدون إجازات</p>
+                <p>يومياً من 7:00 صباحاً<br>إلى 12:00 منتصف الليل<br>بدون إجازات</p>
             </div>
         </div>
     </section>
@@ -1320,7 +1320,7 @@
                 <h5>تواصل معنا</h5>
                 <p>📞 0775199029</p>
                 <p>📍 الزرقاء — شارع الثلاثين</p>
-                <p>🕐 يومياً 7 ص — 11 م</p>
+                <p>🕐 يومياً 7 ص — 12 م</p>
                 <a href="https://wa.me/962775199029" target="_blank" rel="noopener">💬 واتساب</a>
             </div>
         </div>
@@ -1381,7 +1381,7 @@
          JavaScript
          ═══════════════════════════════════════ -->
     <script>
-        // ── Store Hours: Open 07:00, Close 23:00 (Jordan time = UTC+3) ──
+        // ── Store Hours: Open 07:00, Close 24:00 (midnight) (Jordan time = UTC+3) ──
         function updateStoreStatus() {
             const now = new Date();
             // Get Jordan time (UTC+3)
@@ -1393,9 +1393,9 @@
             const badge = document.getElementById('statusBadge');
             const text = document.getElementById('statusText');
 
-            if (currentTime >= 7 && currentTime < 23) {
+            if (currentTime >= 7 && currentTime < 24) {
                 badge.className = 'status-badge open';
-                const closeHour = 23;
+                const closeHour = 24;
                 const remaining = closeHour - currentTime;
                 const rH = Math.floor(remaining);
                 const rM = Math.floor((remaining - rH) * 60);
