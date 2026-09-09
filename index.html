@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بقالة الحياة | AL-HAYAT GROCERY</title>
+    <meta name="description" content="بقالة الحياة - مواد تموينية وغذائية في الزرقاء، الأردن. شارع الثلاثين، بالقرب من إسكان أبو جبريل.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="logo.png" type="image/png">
+    <style>
+        /* ═══════════════════════════════════════
+           CSS Variables & Reset
+           ═══════════════════════════════════════ */
+        :root {
+            --emerald: #047857;
+            --emerald-light: #059669;
+            --emerald-dark: #065f46;
+            --gold: #d4a017;
+            --gold-light: #f0c040;
+            --gold-dark: #b8860b;
+            --bg-cream: #f8f6f0;
+            --bg-white: #ffffff;
+            --bg-light: #f0fdf4;
+            --text-dark: #1a1a2e;
+            --text-medium: #374151;
+            --text-light: #6b7280;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+            --shadow-gold: 0 4px 20px rgba(212,160,23,0.25);
+            --radius: 16px;
+            --radius-lg: 24px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+            padding-bottom: 80px;
+        }
+
+        /* ═══════════════════════════════════════
+           Header & Navigation
+           ═══════════════════════════════════════ */
+        header {
+            background: linear-gradient(135deg, var(--emerald-dark) 0%, var(--emerald) 50%, var(--emerald-light) 100%);
+            color: white;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(4,120,87,0.3);
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-area img {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: 3px solid var(--gold);
+            box-shadow: 0 0 20px rgba(212,160,23,0.4);
+            background: white;
+            padding: 3px;
+            object-fit: contain;
+        }
+
+        .logo-text h1 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .logo-text span {
+            font-size: 0.7rem;
+            opacity: 0.85;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .header-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .header-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .header-links a:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-1px);
+        }
+
+        /* ═══════════════════════════════════════
+           Hero Section
+           ═══════════════════════════════════════ */
+        .hero {
+            background: linear-gradient(170deg, var(--emerald-dark) 0%, var(--emerald) 40%, var(--emerald-light) 100%);
+            color: white;
+            padding: 60px 5% 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -20%;
+            width: 60%;
+            height: 200%;
+            background: radial-gradient(ellipse, rgba(212,160,23,0.08) 0%, transparent 70%);
+            animation: heroGlow 8s ease-in-out infinite alternate;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: linear-gradient(to top, var(--bg-cream), transparent);
+        }
+
+        @keyframes heroGlow {
+            0% { transform: translateX(-10%) rotate(-5deg); }
+            100% { transform: translateX(10%) rotate(5deg); }
+        }
+
+        .hero-logo {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 5px solid var(--gold);
+            box-shadow: 0 0 40px rgba(212,160,23,0.35), 0 8px 32px rgba(0,0,0,0.3);
+            margin-bottom: 28px;
+            background: white;
+            padding: 8px;
+            object-fit: contain;
+            position: relative;
+            z-index: 1;
+            animation: logoFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .hero h2 {
+            font-size: 2.6rem;
+            font-weight: 900;
+            margin-bottom: 8px;
+            text-shadow: 0 3px 10px rgba(0,0,0,0.25);
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 24px;
+            border-radius: 50px;
+            margin-top: 24px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ═══════════════════════════════════════
+           Status Badge (Open/Closed)
+           ═══════════════════════════════════════ */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+            transition: all 0.5s ease;
+        }
+
+        .status-badge.open {
+            background: rgba(74, 222, 128, 0.2);
+            border: 2px solid rgba(74, 222, 128, 0.5);
+            color: #bbf7d0;
+        }
+
+        .status-badge.closed {
+            background: rgba(248, 113, 113, 0.2);
+            border: 2px solid rgba(248, 113, 113, 0.5);
+            color: #fecaca;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .status-badge.open .status-dot {
+            background: #4ade80;
+            box-shadow: 0 0 12px #4ade80;
+            animation: pulse 2s infinite;
+        }
+
+        .status-badge.closed .status-dot {
+            background: #f87171;
+            box-shadow: 0 0 12px #f87171;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+
+        /* ═══════════════════════════════════════
+           Sections General
+           ═══════════════════════════════════════ */
+        .section {
+            padding: 60px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-title h3 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--emerald-dark);
+            margin-bottom: 8px;
+        }
+
+        .section-title .underline {
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to left, var(--gold), var(--emerald));
+            border-radius: 2px;
+            margin: 0 auto 12px;
+        }
+
+        .section-title p {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        /* ═══════════════════════════════════════
+           Categories Grid
+           ═══════════════════════════════════════ */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .category-card {
+            background: var(--bg-white);
+            border-radius: var(--radius-lg);
+            padding: 36px 24px;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to left, var(--emerald), var(--gold));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .category-card:hover::before {
+            opacity: 1;
+        }
+
+        .category-icon {
+            font-size: 3.5rem;
+            margin-bottom: 16px;
+            display: block;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover .category-icon {
+            transform: scale(1.15) rotate(-5deg);
+        }
+
+        .category-card h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--emerald-dark);
+            margin-bottom: 8px;
+        }
+
+        .category-card p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* ═══════════════════════════════════════
+           About Strip
+           ═══════════════════════════════════════ */
+        .about-strip {
+            background: linear-gradient(135deg, var(--emerald-dark), var(--emerald));
+            color: white;
+            padding: 60px 5%;
+        }
+
+        .about-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 32px;
+            text-align: center;
+        }
+
+        .about-item {
+            padding: 24px;
+        }
+
+        .about-item .icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .about-item h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--gold-light);
+        }
+
+        .about-item p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        /* ═══════════════════════════════════════
+           Info Cards
+           ═══════════════════════════════════════ */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 28px;
+        }
+
+        .info-card {
+            background: var(--bg-white);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+
+        .info-card h4 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--emerald-dark);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-card p, .info-card li {
+            color: var(--text-medium);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .info-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-card ul li {
+            padding: 6px 0;
+            padding-right: 20px;
+            position: relative;
+        }
+
+        .info-card ul li::before {
+            content: '✦';
+            position: absolute;
+            right: 0;
+            color: var(--gold);
+            font-size: 0.8rem;
+        }
+
+        /* ═══════════════════════════════════════
+           Map Section
+           ═══════════════════════════════════════ */
+        .map-section {
+            background: var(--bg-white);
+            padding: 60px 5%;
+        }
+
+        .map-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .map-wrapper {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 28px;
+            border: 3px solid rgba(4,120,87,0.1);
+        }
+
+        .map-wrapper iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+            display: block;
+        }
+
+        .map-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--emerald), var(--emerald-light));
+            color: white;
+            box-shadow: 0 4px 20px rgba(4,120,87,0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(4,120,87,0.45);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+            color: white;
+            box-shadow: var(--shadow-gold);
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(212,160,23,0.45);
+        }
+
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: white;
+            box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-2px);
+        }
+
+        /* ═══════════════════════════════════════
+           Features Row
+           ═══════════════════════════════════════ */
+        .features {
+            background: var(--bg-light);
+            padding: 50px 5%;
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 24px 16px;
+        }
+
+        .feature-item .feat-icon {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .feature-item h5 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--emerald-dark);
+        }
+
+        .feature-item p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        /* ═══════════════════════════════════════
+           Footer
+           ═══════════════════════════════════════ */
+        footer {
+            background: var(--text-dark);
+            color: rgba(255,255,255,0.7);
+            padding: 48px 5% 28px;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 32px;
+        }
+
+        .footer-brand img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            margin-bottom: 12px;
+            background: white;
+            padding: 3px;
+            object-fit: contain;
+        }
+
+        .footer-brand h4 {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .footer-brand p {
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .footer-col h5 {
+            color: var(--gold-light);
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .footer-col p, .footer-col a {
+            display: block;
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--gold-light);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.85rem;
+        }
+
+        /* ═══════════════════════════════════════
+           Mobile Bottom Bar
+           ═══════════════════════════════════════ */
+        .mobile-bar {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 -4px 30px rgba(0,0,0,0.12);
+            z-index: 9999;
+            padding: 10px 16px;
+            padding-bottom: max(10px, env(safe-area-inset-bottom));
+        }
+
+        .mobile-bar-inner {
+            display: flex;
+            gap: 10px;
+        }
+
+        .mobile-bar .bar-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 8px;
+            border-radius: 14px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .bar-call {
+            background: linear-gradient(135deg, var(--emerald), var(--emerald-light));
+            color: white;
+        }
+
+        .bar-map {
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+            color: white;
+        }
+
+        .bar-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* ═══════════════════════════════════════
+           Scroll to top
+           ═══════════════════════════════════════ */
+        .scroll-top {
+            position: fixed;
+            bottom: 100px;
+            left: 24px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--emerald);
+            color: white;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            background: var(--emerald-dark);
+            transform: translateY(-3px);
+        }
+
+        /* ═══════════════════════════════════════
+           Animations
+           ═══════════════════════════════════════ */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ═══════════════════════════════════════
+           Responsive
+           ═══════════════════════════════════════ */
+        @media (max-width: 768px) {
+            .header-links {
+                display: none;
+            }
+
+            .logo-area img {
+                width: 44px;
+                height: 44px;
+            }
+
+            .logo-text h1 {
+                font-size: 1.05rem;
+            }
+
+            .hero {
+                padding: 40px 5% 60px;
+            }
+
+            .hero-logo {
+                width: 120px;
+                height: 120px;
+            }
+
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 0.95rem;
+            }
+
+            .section {
+                padding: 40px 5%;
+            }
+
+            .section-title h3 {
+                font-size: 1.5rem;
+            }
+
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 14px;
+            }
+
+            .category-card {
+                padding: 24px 14px;
+            }
+
+            .category-icon {
+                font-size: 2.5rem;
+            }
+
+            .category-card h4 {
+                font-size: 0.95rem;
+            }
+
+            .category-card p {
+                font-size: 0.78rem;
+            }
+
+            .about-inner {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .about-item {
+                padding: 16px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .map-wrapper iframe {
+                height: 280px;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .footer-inner {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                text-align: center;
+            }
+
+            .mobile-bar {
+                display: block;
+            }
+
+            body {
+                padding-bottom: 85px;
+            }
+
+            .scroll-top {
+                bottom: 100px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .status-badge {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══════════════════════════════════════
+         Header
+         ═══════════════════════════════════════ -->
+    <header>
+        <div class="header-top">
+            <div class="logo-area">
+                <img src="logo.png" alt="بقالة الحياة">
+                <div class="logo-text">
+                    <h1>بقالة الحياة</h1>
+                    <span>AL-HAYAT GROCERY</span>
+                </div>
+            </div>
+            <nav class="header-links">
+                <a href="#categories">الأقسام</a>
+                <a href="#about">من نحن</a>
+                <a href="#location">الموقع</a>
+                <a href="tel:0775199029">📞 اتصل بنا</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ═══════════════════════════════════════
+         Hero Section
+         ═══════════════════════════════════════ -->
+    <section class="hero">
+        <img src="logo.png" alt="بقالة الحياة" class="hero-logo">
+        <h2>بقالة الحياة</h2>
+        <p>أشهر بقالة تموينية في الزرقاء — جودة عالية وأسعار منافسة لجميع احتياجاتك اليومية</p>
+
+        <!-- Status Badge -->
+        <div id="statusBadge" class="status-badge open">
+            <span class="status-dot"></span>
+            <span id="statusText">جاري التحقق...</span>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         Features Strip
+         ═══════════════════════════════════════ -->
+    <section class="features">
+        <div class="features-grid">
+            <div class="feature-item fade-in">
+                <span class="feat-icon">✅</span>
+                <h5>منتجات طازجة</h5>
+                <p>تصنيع يومي</p>
+            </div>
+            <div class="feature-item fade-in">
+                <span class="feat-icon">💰</span>
+                <h5>أسعار منافسة</h5>
+                <p>دون منافس</p>
+            </div>
+            <div class="feature-item fade-in">
+                <span class="feat-icon">🚗</span>
+                <h5>توصيل مجاني</h5>
+                <p>لجميع أنحاء الزرقاء</p>
+            </div>
+            <div class="feature-item fade-in">
+                <span class="feat-icon">⏰</span>
+                <h5>ساعات طويلة</h5>
+                <p>7 ص — 11 م يومياً</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         Categories Section
+         ═══════════════════════════════════════ -->
+    <section class="section" id="categories">
+        <div class="section-title fade-in">
+            <h3>أقسام المتجر</h3>
+            <div class="underline"></div>
+            <p>نقدم لك تشكيلة واسعة من المنتجات الغذائية والموارد اليومية</p>
+        </div>
+
+        <div class="categories-grid">
+            <div class="category-card fade-in">
+                <span class="category-icon">🫘</span>
+                <h4>بقوليات ومعلبات</h4>
+                <p>عدس، حمص، فاصوليا، تونة، حمص معلب، جميع المعلبات المحلية والمستوردة</p>
+            </div>
+            <div class="category-card fade-in">
+                <span class="category-icon">🧀</span>
+                <h4>ألبان وأجبان</h4>
+                <p>حليب طازج، زبادي، جبنة بيضاء، شيدر، كريمي، أجبان محلية ومستوردة</p>
+            </div>
+            <div class="category-card fade-in">
+                <span class="category-icon">🧹</span>
+                <h4>منظفات وأدوات منزلية</h4>
+                <p>صابون، شامبو، معقمات، منظفات أرضيات، أكياس، أدوات مطبخ متنوعة</p>
+            </div>
+            <div class="category-card fade-in">
+                <span class="category-icon">🍿</span>
+                <h4>مسليات ومشروبات</h4>
+                <p>شيبس، بسكويت، شوكولاتة، عصائر، مشروبات غازية، مكسرات متنوعة</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         About Strip
+         ═══════════════════════════════════════ -->
+    <section class="about-strip" id="about">
+        <div class="about-inner">
+            <div class="about-item fade-in">
+                <span class="icon">📍</span>
+                <h4>موقعنا</h4>
+                <p>الأردن — الزرقاء<br>شارع الثلاثين<br>بالقرب من إسكان أبو جبريل</p>
+            </div>
+            <div class="about-item fade-in">
+                <span class="icon">📞</span>
+                <h4>اتصل بنا</h4>
+                <p>0775199029</p>
+                <a href="tel:0775199029" class="btn btn-gold" style="margin-top:12px;font-size:0.9rem;padding:10px 24px;">
+                    📞 اتصل الآن
+                </a>
+            </div>
+            <div class="about-item fade-in">
+                <span class="icon">🕐</span>
+                <h4>أوقات العمل</h4>
+                <p>يومياً من 7:00 صباحاً<br>إلى 11:00 مساءً<br>بدون إجازات</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         Store Info
+         ═══════════════════════════════════════ -->
+    <section class="section">
+        <div class="info-grid">
+            <div class="info-card fade-in">
+                <h4>🏪 عن البقالة</h4>
+                <p>بقالة الحياة هي وجهتك المثالية لجميع احتياجاتك اليومية. نوفر لك تشكيلة واسعة من المنتجات الغذائية والموارد المنزلية بأفضل الأسعار وأعلى جودة. نسعى دائماً لتوفير تجربة تسوق مريحة ورضاء تام لعملائنا الكرام.</p>
+            </div>
+            <div class="info-card fade-in">
+                <h4>📦 خدماتنا</h4>
+                <ul>
+                    <li>توصيل مجاني داخل الزرقاء</li>
+                    <li>عروض وخصومات أسبوعية</li>
+                    <li>منتجات طازجة يومياً</li>
+                    <li>دفع عند الاستلام</li>
+                    <li>خدمة عملاء ممتازة</li>
+                </ul>
+            </div>
+            <div class="info-card fade-in">
+                <h4>⭐ لماذا نحن؟</h4>
+                <ul>
+                    <li>خبرة تمتد لسنوات في خدمة الزرقاء</li>
+                    <li>أسعار تنافسية لا تُقارن</li>
+                    <li>تنوع كبير في المنتجات</li>
+                    <li>موقع في قلب المدينة</li>
+                    <li>فريق عمل ودود ومحترف</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         Map & Location
+         ═══════════════════════════════════════ -->
+    <section class="map-section" id="location">
+        <div class="map-inner">
+            <div class="section-title fade-in">
+                <h3>موقعنا على الخريطة</h3>
+                <div class="underline"></div>
+                <p>شارع الثلاثين — بالقرب من إسكان أبو جبريل — الزرقاء</p>
+            </div>
+
+            <div class="map-wrapper fade-in">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3379.5!2d36.08!3d32.07!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzLCsDA0JzEyLjAiTiAzNsKwMDQnNDguMCJF!5e0!3m2!1sar!2sjo!4v1700000000000!5m2!1sar!2sjo"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="موقع بقالة الحياة على الخريطة">
+                </iframe>
+            </div>
+
+            <div class="map-actions fade-in">
+                <a href="https://www.google.com/maps/search/?api=1&query=شارع+الثلاثين+القرب+من+إسكان+أبو+جبريل+الزرقاء+الأردن"
+                   target="_blank"
+                   class="btn btn-primary"
+                   rel="noopener">
+                    📍 فتح الموقع في خرائط Google
+                </a>
+                <a href="tel:0775199029" class="btn btn-gold">
+                    📞 اتصل بنا الآن
+                </a>
+                <a href="https://wa.me/962775199029"
+                   target="_blank"
+                   class="btn btn-whatsapp"
+                   rel="noopener">
+                    💬 واتساب
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         Footer
+         ═══════════════════════════════════════ -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <img src="logo.png" alt="بقالة الحياة">
+                <h4>بقالة الحياة</h4>
+                <p>وجهتك المثالية لجميع احتياجاتك اليومية. جودة عالية، أسعار منافسة، وخدمة لا تُنسى. نخدم مجتمع الزرقاء بفخر منذ سنوات.</p>
+            </div>
+            <div class="footer-col">
+                <h5>روابط سريعة</h5>
+                <a href="#categories">الأقسام</a>
+                <a href="#about">من نحن</a>
+                <a href="#location">الموقع</a>
+                <a href="tel:0775199029">اتصل بنا</a>
+            </div>
+            <div class="footer-col">
+                <h5>تواصل معنا</h5>
+                <p>📞 0775199029</p>
+                <p>📍 الزرقاء — شارع الثلاثين</p>
+                <p>🕐 يومياً 7 ص — 11 م</p>
+                <a href="https://wa.me/962775199029" target="_blank" rel="noopener">💬 واتساب</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 بقالة الحياة — AL-HAYAT GROCERY. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <!-- ═══════════════════════════════════════
+         Mobile Bottom Bar
+         ═══════════════════════════════════════ -->
+    <div class="mobile-bar">
+        <div class="mobile-bar-inner">
+            <a href="tel:0775199029" class="bar-btn bar-call">📞 اتصل الآن</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=شارع+الثلاثين+الزرقاء+الأردن"
+               target="_blank"
+               class="bar-btn bar-map"
+               rel="noopener">📍 الخريطة</a>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         Scroll to Top Button
+         ═══════════════════════════════════════ -->
+    <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <!-- ═══════════════════════════════════════
+         JavaScript
+         ═══════════════════════════════════════ -->
+    <script>
+        // ── Store Hours: Open 07:00, Close 23:00 (Jordan time = UTC+3) ──
+        function updateStoreStatus() {
+            const now = new Date();
+            // Get Jordan time (UTC+3)
+            const jordanTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Amman" }));
+            const hour = jordanTime.getHours();
+            const minutes = jordanTime.getMinutes();
+            const currentTime = hour + minutes / 60;
+
+            const badge = document.getElementById('statusBadge');
+            const text = document.getElementById('statusText');
+
+            if (currentTime >= 7 && currentTime < 23) {
+                badge.className = 'status-badge open';
+                const closeHour = 23;
+                const remaining = closeHour - currentTime;
+                const rH = Math.floor(remaining);
+                const rM = Math.floor((remaining - rH) * 60);
+                text.textContent = '🟢 مفتوح الآن — مرحباً بكم! (متبقي ' + rH + 'س ' + rM + 'د)';
+            } else {
+                badge.className = 'status-badge closed';
+                let opensIn;
+                if (currentTime < 7) {
+                    opensIn = 7 - currentTime;
+                } else {
+                    opensIn = (24 - currentTime) + 7;
+                }
+                const oH = Math.floor(opensIn);
+                const oM = Math.floor((opensIn - oH) * 60);
+                text.textContent = '🔴 مغلق حالياً — نفتح غداً الساعة 7:00 صباحاً (بعد ' + oH + 'س ' + oM + 'د)';
+            }
+        }
+
+        updateStoreStatus();
+        setInterval(updateStoreStatus, 60000); // Update every minute
+
+        // ── Scroll to top visibility ──
+        const scrollBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 400) {
+                scrollBtn.classList.add('visible');
+            } else {
+                scrollBtn.classList.remove('visible');
+            }
+        });
+
+        // ── Fade-in animation on scroll ──
+        const fadeEls = document.querySelectorAll('.fade-in');
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    fadeObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        fadeEls.forEach(el => fadeObserver.observe(el));
+
+        // ── Smooth scroll for anchor links ──
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
